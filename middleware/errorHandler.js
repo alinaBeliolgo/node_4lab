@@ -1,5 +1,4 @@
 import logger from "../utils/logger.js";
-import * as Sentry from "@sentry/node";
 import { ValidationError } from "../errors/ValidationError.js";
 
 const errorHandler = (err, req, res, next) => {
@@ -23,10 +22,7 @@ const errorHandler = (err, req, res, next) => {
         logger.warn("Client error", logPayload);
     }
 
-    // Отправка в Sentry (кроме ошибок валидации)
-    if (!isValidation && process.env.SENTRY_DSN) {
-        Sentry.captureException(err);
-    }
+    // Отправка во внешние сервисы отключена (Sentry удалён по требованию)
 
     let message = err.message || "Внутренняя ошибка сервера";
     if (!isOperational && isProd && !isValidation) {

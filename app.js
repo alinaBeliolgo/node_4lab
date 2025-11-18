@@ -1,7 +1,6 @@
 import express from "express";
 import "dotenv/config.js";
 import cors from "cors";
-import * as Sentry from "@sentry/node";
 // routers
 import todoRouter from "./router/todoRouter.js";
 import categoryRouter from "./router/categoryRouter.js";
@@ -17,11 +16,6 @@ import { AppError } from "./errors/AppError.js";
 const PORT = 3000;
 
 const app = express();
-
-Sentry.init({
-  dsn: process.env.SENTRY_DSN || undefined,
-  environment: process.env.NODE_ENV || 'development'
-});
 
 app.use(express.json());
 // Разрешим CORS для браузерных клиентов/Swagger, можно сузить origin через переменную окружения
